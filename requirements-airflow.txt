@@ -1,0 +1,6 @@
+pandas
+boto3
+confluent-kafka
+python-dotenv
+pyarrow
+dbt-duckdb

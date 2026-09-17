@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: fact_trades
+    columns:
+      - name: symbol
+        data_tests:
+          - not_null
+
+      - name: price
+        data_tests:
+          - not_null
+
+  - name: dim_symbol
+    columns:
+      - name: symbol
+        data_tests:
+          - not_null
+          - unique

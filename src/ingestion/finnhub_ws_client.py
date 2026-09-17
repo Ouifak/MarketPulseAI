@@ -4,7 +4,7 @@ import json
 import websocket
 from confluent_kafka import Producer
 
-from config import FINNHUB_API_KEY, STOCK_SYMBOLS, KAFKA_BOOTSTRAP_SERVERS, KAFKA_TOPIC_TRADES
+from ingestion.config import FINNHUB_API_KEY, STOCK_SYMBOLS, KAFKA_BOOTSTRAP_SERVERS, KAFKA_TOPIC_TRADES
 
 producer = Producer({"bootstrap.servers": KAFKA_BOOTSTRAP_SERVERS})
 
