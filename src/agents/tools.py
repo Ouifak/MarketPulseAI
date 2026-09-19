@@ -6,7 +6,12 @@ Les agents n'accèdent jamais à Kafka/Bronze/Silver : uniquement Gold, déjà a
 import duckdb
 from langchain_core.tools import tool
 
-from ingestion.config import S3_ENDPOINT_URL, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET_GOLD
+from ingestion.config import (
+    S3_ACCESS_KEY,
+    S3_BUCKET_GOLD,
+    S3_ENDPOINT_URL,
+    S3_SECRET_KEY,
+)
 
 
 def _connect() -> duckdb.DuckDBPyConnection:

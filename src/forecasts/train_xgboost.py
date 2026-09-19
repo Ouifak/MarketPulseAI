@@ -8,15 +8,15 @@ Usage :
 """
 
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error
 from xgboost import XGBRegressor
 
-from pipeline.bronze.utils import get_s3_client
 from forecasts.utils import read_features, save_model
+from pipeline.bronze.utils import get_s3_client
 
 FEATURE_COLS = ["moving_avg_10", "price_return", "rolling_vol_10", "volume"]
 TARGET_COL = "target_next_return"
@@ -48,7 +48,7 @@ def time_based_split(df: pd.DataFrame, train_ratio: float = 0.8):
 
 
 def main(date: str | None = None) -> None:
-    date = date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date = date or datetime.now(UTC).strftime("%Y-%m-%d")
     s3 = get_s3_client()
 
     features = read_features(s3, date)

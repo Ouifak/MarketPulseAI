@@ -19,14 +19,14 @@ Usage :
 """
 
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import numpy as np
 import pandas as pd
 
+from ingestion.config import S3_BUCKET_GOLD
 from pipeline.bronze.utils import get_s3_client
 from pipeline.gold.utils import read_silver, write_gold
-from ingestion.config import S3_BUCKET_GOLD
 
 
 def _vwap(prices: pd.Series, volumes: pd.Series) -> float:
@@ -54,7 +54,7 @@ def daily_metrics(df: pd.DataFrame, date: str) -> pd.DataFrame:
                 "total_volume": float(g["volume"].sum()),
                 "volatility": float(g["price"].std(ddof=0)),
                 "daily_return_pct": daily_return,
-                "trade_count": int(len(g)),
+                "trade_count": len(g),
             }
         )
     return pd.DataFrame(rows)
@@ -89,7 +89,7 @@ def window_5min(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def main(date: str | None = None) -> None:
-    date = date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date = date or datetime.now(UTC).strftime("%Y-%m-%d")
     s3 = get_s3_client()
 
     silver = read_silver(s3, "trades", date)

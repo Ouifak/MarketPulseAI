@@ -1,11 +1,12 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
+
+from airflow.operators.python import PythonOperator
 
 from airflow import DAG
-from airflow.operators.python import PythonOperator
 
 
 def _today() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    return datetime.now(UTC).strftime("%Y-%m-%d")
 
 
 def transform_silver() -> None:
@@ -30,6 +31,7 @@ def dbt_build() -> None:
             env={**__import__("os").environ, **env},
             capture_output=True,
             text=True,
+            check=False,
         )
         print(result.stdout)
         print(result.stderr)
@@ -46,7 +48,7 @@ default_args = {
 with DAG(
     dag_id="stock_pipeline",
     description="Batch horaire : Silver -> Gold -> dbt (Bronze alimenté en continu, hors Airflow)",
-    start_date=datetime(2026, 9, 1),
+        start_date=datetime(2026, 9, 1, tzinfo=UTC),
     schedule="@hourly",
     catchup=False,
     default_args=default_args,

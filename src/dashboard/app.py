@@ -3,8 +3,9 @@ Interface MarketPulse AI : dashboard (métriques Gold) + chat vers les agents.
 Lancer avec : streamlit run dashboard/app.py
 """
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
+import duckdb
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -18,7 +19,7 @@ st.title("📈 MarketPulse AI")
 
 tab_dashboard, tab_chat = st.tabs(["Dashboard", "Agents"])
 
-today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+today = datetime.now(UTC).strftime("%Y-%m-%d")
 
 with tab_dashboard:
     date = st.text_input("Date (YYYY-MM-DD)", value=today)
@@ -28,7 +29,7 @@ with tab_dashboard:
         df = con.execute(f"""
             SELECT * FROM read_parquet('s3://{S3_BUCKET_GOLD}/agg_stock_metrics/date={date}/agg_stock_metrics.parquet')
         """).fetchdf()
-    except Exception:
+    except duckdb.IOException:
         df = pd.DataFrame()
 
     if df.empty:

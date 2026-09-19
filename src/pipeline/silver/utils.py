@@ -2,6 +2,7 @@
 
 import io
 import json
+
 import pandas as pd
 
 from ingestion.config import S3_BUCKET_BRONZE, S3_BUCKET_SILVER

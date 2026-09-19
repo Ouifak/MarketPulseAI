@@ -3,22 +3,22 @@
 import json
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import boto3
 from botocore.client import Config
 from confluent_kafka import Consumer
 
 from ingestion.config import (
-    KAFKA_BOOTSTRAP_SERVERS,
-    KAFKA_TOPIC_TRADES,
-    CONSUMER_GROUP,
     BATCH_SIZE,
     BATCH_TIMEOUT_S,
-    S3_ENDPOINT_URL,
+    CONSUMER_GROUP,
+    KAFKA_BOOTSTRAP_SERVERS,
+    KAFKA_TOPIC_TRADES,
     S3_ACCESS_KEY,
-    S3_SECRET_KEY,
     S3_BUCKET_BRONZE,
+    S3_ENDPOINT_URL,
+    S3_SECRET_KEY,
 )
 
 s3 = boto3.client(
@@ -41,7 +41,7 @@ consumer.subscribe([KAFKA_TOPIC_TRADES])
 
 def bronze_key() -> str:
     """bronze/date=YYYY-MM-DD/HHMMSS-uuid8.jsonl -- un fichier par batch, jamais d'append."""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     date_part = now.strftime("%Y-%m-%d")
     file_part = f"{now.strftime('%H%M%S')}-{uuid.uuid4().hex[:8]}.jsonl"
     return f"date={date_part}/{file_part}"

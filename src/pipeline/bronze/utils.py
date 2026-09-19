@@ -3,7 +3,7 @@
 import boto3
 from botocore.client import Config
 
-from ingestion.config import S3_ENDPOINT_URL, S3_ACCESS_KEY, S3_SECRET_KEY
+from ingestion.config import S3_ACCESS_KEY, S3_ENDPOINT_URL, S3_SECRET_KEY
 
 
 def get_s3_client():

@@ -6,19 +6,14 @@ Système multi-agents :
 - LLM local : Ollama / Qwen3 8B
 """
 
-from typing import Literal, TypedDict, Annotated
 import operator
+from typing import Annotated, Literal, TypedDict
 
-from langchain_ollama import ChatOllama
 from langchain.agents import create_agent
-from langgraph.graph import StateGraph, END
+from langchain_ollama import ChatOllama
+from langgraph.graph import END, StateGraph
 
-from agents.tools import (
-    get_stock_metrics,
-    detect_anomalies,
-    get_5min_trend
-)
-
+from agents.tools import detect_anomalies, get_5min_trend, get_stock_metrics
 
 # ============================================================
 # 1. LLM LOCAL — OLLAMA

@@ -15,13 +15,13 @@ Usage :
 """
 
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pandas as pd
 
+from ingestion.config import S3_BUCKET_GOLD
 from pipeline.bronze.utils import get_s3_client
 from pipeline.gold.utils import read_silver, write_gold
-from ingestion.config import S3_BUCKET_GOLD
 
 
 def build_features(df: pd.DataFrame) -> pd.DataFrame:
@@ -51,7 +51,7 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def main(date: str | None = None) -> None:
-    date = date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date = date or datetime.now(UTC).strftime("%Y-%m-%d")
     s3 = get_s3_client()
 
     silver = read_silver(s3, "trades", date)

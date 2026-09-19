@@ -4,7 +4,7 @@ import io
 
 import pandas as pd
 
-from ingestion.config import S3_BUCKET_SILVER, S3_BUCKET_GOLD
+from ingestion.config import S3_BUCKET_GOLD, S3_BUCKET_SILVER
 
 
 def read_silver(s3, dataset: str, date: str) -> pd.DataFrame:
