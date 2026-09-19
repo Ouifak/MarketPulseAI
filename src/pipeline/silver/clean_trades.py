@@ -6,7 +6,6 @@ from datetime import UTC, datetime
 import pandas as pd
 
 
-from pipeline.bronze.utils import get_s3_client
 from pipeline.silver.utils import normalize_timestamp, read_bronze, write_silver
 
 DATASET = "trades"
@@ -32,6 +31,7 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def main(date: str | None = None) -> None:
+    from pipeline.bronze.utils import get_s3_client
     from ingestion.config import S3_BUCKET_SILVER
     date = date or datetime.now(UTC).strftime("%Y-%m-%d")
     s3 = get_s3_client()
