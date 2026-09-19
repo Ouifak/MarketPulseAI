@@ -24,7 +24,7 @@ Ce projet part d'un choix assumé : n'utiliser que ce que l'API Finnhub gratuite
 | **Data Lake** | MinIO (S3-compatible) — Bronze → Silver → Gold |
 | **Transformation** | dbt, DuckDB (`httpfs`, lecture directe des Parquet sur MinIO) |
 | **Orchestration** | Apache Airflow |
-| **Intelligence / Forecasting** | LangGraph (agents Supervisor / Insight / Anomaly / Forecast), Prophet, SARIMA, XGBoost |
+| **Intelligence / Forecasting** | LangGraph (agents Supervisor / Insight / Anomaly / Forecast) XGBoost |
 | **Interface** | Streamlit |
 | **Infrastructure** | Docker, Docker Compose |
 | **DevOps** | GitHub Actions (CI/CD), Prometheus + Grafana (monitoring), MLflow (tracking des modèles) |
@@ -138,17 +138,16 @@ Agents LangGraph (Streamlit)
 | 2 | Consumer Kafka → Bronze (batching, dédup)
 | 3 | Silver → Gold, modélisation dbt
 | 4 | Orchestration Airflow 
-| 5 | Forecasting (Prophet / SARIMA / XGBoost) 
+| 5 | Forecasting ( XGBoost) 
 | 6 | Système multi-agents LangGraph + Streamlit 
-| 7 | RAG (optionnel) + conteneurisation complète 
-| 8 | CI/CD, monitoring, MLflow, documentation finale 
+| 7 | CI/CD, monitoring, MLflow, documentation finale 
 
 ---
 
 ## ▶️ Démarrage rapide
 
 ```bash
-git clone https://github.com/<ton-user>/marketpulse-ai.git
+git clone https://github.com/Ouifak/MarketPulseAI.git
 cd marketpulse-ai
 
 cp .env.example .env
