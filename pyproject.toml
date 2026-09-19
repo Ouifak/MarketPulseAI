@@ -7,6 +7,14 @@ name = "marketpulse-ai"
 version = "0.1.0"
 description = "Pipeline de données de marché en temps réel avec ingestion Kafka, data lake MinIO et agents LangGraph"
 requires-python = ">=3.11"
+dependencies = [
+    "pandas",
+    "pyarrow",
+    "boto3",
+    "confluent-kafka",
+    "python-dotenv",
+    "duckdb",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
