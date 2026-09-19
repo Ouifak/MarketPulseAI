@@ -3,10 +3,9 @@
 import boto3
 from botocore.client import Config
 
-from ingestion.config import S3_ACCESS_KEY, S3_ENDPOINT_URL, S3_SECRET_KEY
-
 
 def get_s3_client():
+    from ingestion.config import S3_ACCESS_KEY, S3_ENDPOINT_URL, S3_SECRET_KEY
     """Client boto3 partagé, configuré pour MinIO (S3-compatible)."""
     return boto3.client(
         "s3",

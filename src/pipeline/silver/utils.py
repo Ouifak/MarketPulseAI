@@ -5,8 +5,6 @@ import json
 
 import pandas as pd
 
-from ingestion.config import S3_BUCKET_BRONZE, S3_BUCKET_SILVER
-
 FINNHUB_COLUMN_MAP = {
     "s": "symbol",
     "p": "price",
@@ -23,6 +21,7 @@ def normalize_timestamp(df: pd.DataFrame, column: str) -> pd.DataFrame:
 
 
 def read_bronze(s3, dataset: str, date: str) -> pd.DataFrame:
+    from ingestion.config import S3_BUCKET_BRONZE
     prefix = f"date={date}/"
     paginator = s3.get_paginator("list_objects_v2")
     rows: list[dict] = []
@@ -42,6 +41,7 @@ def read_bronze(s3, dataset: str, date: str) -> pd.DataFrame:
 
 
 def write_silver(s3, dataset: str, date: str, df: pd.DataFrame) -> str | None:
+    from ingestion.config import S3_BUCKET_SILVER
     if df.empty:
         return None
 
