@@ -8,8 +8,7 @@ Ce projet ne se contente pas de déplacer de la donnée d'un point A à un point
 
 ## 🖼️ Architecture
 
-Finnhub API  -->  Kafka  --> Stockage (Bronze / Silver / Gold)  -->  dbt  -->  Orchestration( Apach airflow) --> ML --> Agentic AI --> Dashboard --> Conteneurisation --> CI / CD --> Observabilité
-
+Finnhub API  -->  Kafka  --> Stockage (Bronze / Silver / Gold)  -->  dbt  -->  Orchestration( Apach airflow) --> ML --> Agentic AI --> Dashboard --> Conteneurisation --> CI / CD 
 ## 🎯 Pourquoi ce projet
 
 Ce projet part d'un choix assumé : n'utiliser que ce que l'API Finnhub gratuite fournit réellement en temps réel — les **trades** exécutés, via WebSocket. Les endpoints `quote` et `candle` de Finnhub sont soit rate-limités en polling REST, soit verrouillés côté payant. Plutôt que de contourner cette limite avec un abonnement payant, le pipeline **dérive lui-même** les candles (OHLCV) et les métriques de marché (VWAP, volatilité) à partir du flux brut de trades, dans la couche Gold — un exercice d'ingénierie plus intéressant qu'un simple passthrough API → stockage.
@@ -27,7 +26,7 @@ Ce projet part d'un choix assumé : n'utiliser que ce que l'API Finnhub gratuite
 | **Intelligence / Forecasting** | LangGraph (agents Supervisor / Insight / Anomaly / Forecast) XGBoost |
 | **Interface** | Streamlit |
 | **Infrastructure** | Docker, Docker Compose |
-| **DevOps** | GitHub Actions (CI/CD), Prometheus + Grafana (monitoring), MLflow (tracking des modèles) |
+| **DevOps** | GitHub Actions (CI/CD)
 
 ---
 
@@ -108,8 +107,6 @@ Pas de data warehouse cloud payant — **DuckDB** interroge directement les fich
 
 - **Docker Compose** pour l'environnement complet en local (Kafka, MinIO, Airflow, agents)
 - **CI/CD** (GitHub Actions) : lint, tests, build des images à chaque push
-- **Monitoring** : Prometheus + Grafana (santé du pipeline, lag Kafka, durée des DAGs)
-- **MLflow** : tracking et versioning des modèles de forecasting
 
 ---
 
@@ -140,7 +137,7 @@ Agents LangGraph (Streamlit)
 | 4 | Orchestration Airflow 
 | 5 | Forecasting ( XGBoost) 
 | 6 | Système multi-agents LangGraph + Streamlit 
-| 7 | CI/CD, monitoring, MLflow, documentation finale 
+| 7 | CI/CD, documentation finale 
 
 ---
 
